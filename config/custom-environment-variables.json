@@ -1,0 +1,4 @@
+{
+  "jwtPrivateKey": "pg_fullstack",
+  "dbUrl": "mongodb+srv://abhishek1:test12345@taskapp-tapyx.mongodb.net/pg_fullstack?retryWrites=true&w=majority"
+}
