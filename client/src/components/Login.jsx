@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-class Login extends Component {
+class LoginForm extends Component {
   state = {
     account: {
       userEmail: "",
@@ -36,8 +36,8 @@ class Login extends Component {
 
     try {
       const { data } = await axios.post("/api/auth", post_body);
-      localStorage.setItem("jwt_token", data);
-      this.props.history.push("/");
+      localStorage.setItem("auth_token", data);
+      window.location = "/";
     } catch (err) {
       if (err.response && err.response.status === 400) {
         const errors = { ...this.state.errors };
@@ -101,4 +101,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default LoginForm;

@@ -46,7 +46,9 @@ class Signup extends Component {
     };
 
     try {
-      await axios.post("/api/users", post_body);
+      const response = await axios.post("/api/users", post_body);
+      localStorage.setItem("auth_token", response.headers["x-auth-token"]);
+      this.props.history.push("/");
     } catch (err) {
       if (err.response && err.response.status === 400) {
         const errors = { ...this.state.errors };
@@ -79,21 +81,6 @@ class Signup extends Component {
         <h1>SignUp</h1>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input
-              autoFocus
-              value={username}
-              onChange={this.handleChange}
-              name="username"
-              id="username"
-              type="text"
-              className="form-control"
-            />
-            {errors.username && (
-              <div className="alert alert-danger">{errors.username}</div>
-            )}
-          </div>
-          <div className="form-group">
             <label htmlFor="name">Name</label>
             <input
               autoFocus
@@ -106,6 +93,21 @@ class Signup extends Component {
             />
             {errors.name && (
               <div className="alert alert-danger">{errors.name}</div>
+            )}
+          </div>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input
+              autoFocus
+              value={username}
+              onChange={this.handleChange}
+              name="username"
+              id="username"
+              type="text"
+              className="form-control"
+            />
+            {errors.username && (
+              <div className="alert alert-danger">{errors.username}</div>
             )}
           </div>
           <div className="form-group">
