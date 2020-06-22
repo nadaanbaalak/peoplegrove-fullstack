@@ -7,13 +7,14 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import NotFound from "./components/NotFound";
+import Reservation from "./components/Reservation";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 
 class App extends Component {
   state = {};
 
-  componentDidMount() {
+  async componentDidMount() {
     try {
       const jwt = localStorage.getItem("auth_token");
       const user = jwtDecode(jwt);
@@ -30,6 +31,7 @@ class App extends Component {
             <Route path="/login" component={Login} />
             <Route path="/logout" component={Logout} />
             <Route path="/signup" component={SignUp} />
+            <Route path="/users/:username" component={Reservation} />
             <Route path="/not-found" component={NotFound} />
             <Route path="/" exact component={Home} />
             <Redirect to="/not-found" />

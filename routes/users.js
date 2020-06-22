@@ -20,6 +20,16 @@ router.get("/me", auth, async (req, res, next) => {
   }
 });
 
+//getting all users
+router.get("/", async (req, res, next) => {
+  try {
+    const users = await User.find();
+    res.status(200).send(users);
+  } catch (err) {
+    next(err);
+  }
+});
+
 //Registering new user
 router.post(
   "/",

@@ -9,6 +9,8 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "jwt-decode": "^2.2.0",
+    "lodash": "^4.17.15",
+    "moment-timezone": "^0.5.31",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",

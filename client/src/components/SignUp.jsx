@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import moment from "moment-timezone";
 import axios from "axios";
 
 class Signup extends Component {
@@ -9,6 +10,7 @@ class Signup extends Component {
       password: "",
       username: "",
       password2: "",
+      timezone: "Asia/Kolkata",
     },
     errors: {},
   };
@@ -43,6 +45,7 @@ class Signup extends Component {
       username: account.username,
       name: account.name,
       password: account.password,
+      timezone: account.timezone,
     };
 
     try {
@@ -124,6 +127,19 @@ class Signup extends Component {
             {errors.userEmail && (
               <div className="alert alert-danger">{errors.userEmail}</div>
             )}
+          </div>
+          <div class="form-group">
+            <label for="timezone">Timezone</label>
+            <select
+              class="form-control"
+              id="timezone"
+              onChange={this.handleChange}
+            >
+              {moment.tz.names().map((tz) => {
+                return <option>{tz}</option>;
+              })}
+            </select>
+            <small>Defaults to "Asia/Kolkata"</small>
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>

@@ -3,9 +3,9 @@ import { NavLink, Link } from "react-router-dom";
 
 const Navbar = ({ user }) => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <Link className="navbar-brand" to="/">
-        Planner
+        <b>Planner</b>
       </Link>
       <button
         className="navbar-toggler"
