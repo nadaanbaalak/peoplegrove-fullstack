@@ -6,6 +6,7 @@ import SignUp from "./components/SignUp";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
+import Profile from "./components/Profile";
 import NotFound from "./components/NotFound";
 import Reservation from "./components/Reservation";
 import "./App.css";
@@ -31,7 +32,15 @@ class App extends Component {
             <Route path="/login" component={Login} />
             <Route path="/logout" component={Logout} />
             <Route path="/signup" component={SignUp} />
-            <Route path="/users/:username" component={Reservation} />
+            <Route
+              path="/profile"
+              exact
+              render={(props) => {
+                if (!this.state.user) return <Redirect to="/login" />;
+                return <Profile {...props} user={this.state} />;
+              }}
+            />
+            <Route path="/users/:username" exact component={Reservation} />
             <Route path="/not-found" component={NotFound} />
             <Route
               path="/"

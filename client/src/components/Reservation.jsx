@@ -12,6 +12,7 @@ class Reservation extends Component {
         appointment_time: "",
       },
       isUser: true,
+      timezone: "",
       errors: {},
     };
   }
@@ -19,6 +20,7 @@ class Reservation extends Component {
     const username = this.props.match.params.username;
     const user = await axios.get(`/api/users/${username}`);
     if (user.data.length === 0) this.setState({ isUser: false });
+    else this.setState({ timezone: user.data[0].timezone });
   }
   validate = () => {
     const errors = {};
@@ -87,6 +89,7 @@ class Reservation extends Component {
         ) : (
           <>
             <h1>{`Reservation @${this.props.match.params.username}`}</h1>
+            <p>{`Timezone: ${this.state.timezone}`}</p>
             <form onSubmit={this.handleSubmit}>
               <div className="form-group">
                 <label htmlFor="appointment_date">Reservation Date</label>

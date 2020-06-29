@@ -27,7 +27,7 @@ class Home extends Component {
   }
 
   render() {
-    console.log(this.state.users);
+    //console.log(this.state.users);
     return (
       <div>
         {this.state.users.length !== 0 &&
