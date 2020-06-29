@@ -9,14 +9,33 @@ class Profile extends Component {
       appointments: [],
     };
   }
+
   async componentDidMount() {
-    //console.log(this.props.user.user);
     const resp = await axios.get(
       `/api/appointments/${this.props.user.user.username}`
     );
     this.setState({ appointments: resp.data });
-    //console.log("this.state.appointments ", this.state.appointments);
   }
+
+  handleDelete = async (appointment) => {
+    try {
+      console.log();
+      const resp = await axios.delete(`/api/appointments/${appointment._id}`, {
+        headers: {
+          auth_token: localStorage.getItem("auth_token"),
+        },
+      });
+
+      const remainingAppointments = this.state.appointments.filter(
+        (appointment) => appointment._id !== resp.data._id
+      );
+
+      this.setState({ appointments: remainingAppointments });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   render() {
     return (
       <div>
@@ -27,17 +46,19 @@ class Profile extends Component {
             <div>
               <h3> My Reservations</h3>
             </div>
-            <table class="table">
-              <thead class="thead-dark">
+            Task
+            <table className="table">
+              <thead className="thead-dark">
                 <tr>
                   <th scope="col">Time</th>
                   <th scope="col">Date</th>
                   <th scope="col">With</th>
+                  <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
                 {this.state.appointments.map((appointment) => (
-                  <tr>
+                  <tr key={appointment._id}>
                     <td>{`${appointment.appointment_time}:00 hrs`}</td>
                     <td>
                       {moment(appointment.appointment_date).format(
@@ -45,6 +66,14 @@ class Profile extends Component {
                       )}
                     </td>
                     <td>{appointment.name}</td>
+                    <td>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => this.handleDelete(appointment)}
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

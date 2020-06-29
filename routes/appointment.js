@@ -1,5 +1,6 @@
 const express = require("express");
 const reservationAuth = require("../middleware/reservationAuth");
+const auth = require("../middleware/auth");
 const { check, validationResult } = require("express-validator");
 const Appointment = require("../models/Appointment");
 
@@ -10,7 +11,7 @@ const router = express.Router();
 router.get("/:username", async (req, res, next) => {
   try {
     const user = await User.find({ username: req.params.username });
-    console.log(user);
+    //console.log(user);
     const appointments = await Appointment.find({ owner: user[0]._id }).sort({
       appointment_date: 1,
       appointment_time: 1,
@@ -37,7 +38,6 @@ router.post(
     try {
       const error = validationResult(req);
       if (!error.isEmpty()) {
-        console.log("Inside api validation");
         return res.status(400).send({ errors: error.array() });
       }
       const user = await User.find({ username: req.params.username });
@@ -56,5 +56,22 @@ router.post(
     }
   }
 );
+
+router.delete("/:id", auth, async (req, res, next) => {
+  try {
+    const appointment = await Appointment.findById(req.params.id);
+    console.log(appointment);
+    if (appointment.owner.toString() !== req.user._id) {
+      res.status(401).json({ msg: "Not Allowed" });
+    }
+    if (!appointment) {
+      return res.status(404).json({ msg: "Appointment not found" });
+    }
+    await appointment.delete();
+    res.status(200).send(appointment);
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = router;
