@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const bcrypt = require("bcrypt");
-
 const _ = require("lodash");
 const { check, validationResult } = require("express-validator");
 
@@ -9,6 +8,19 @@ const User = require("../models/User");
 const auth = require("../middleware/auth");
 
 const router = express.Router();
+
+//getting the user with username
+router.get("/:username", async (req, res, next) => {
+  try {
+    const user = await User.find({ username: req.params.username }).select(
+      "-password"
+    );
+
+    res.status(200).send(user);
+  } catch (err) {
+    next(err);
+  }
+});
 
 //getting the current user
 router.get("/me", auth, async (req, res, next) => {

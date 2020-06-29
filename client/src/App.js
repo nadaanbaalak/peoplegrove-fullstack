@@ -33,7 +33,11 @@ class App extends Component {
             <Route path="/signup" component={SignUp} />
             <Route path="/users/:username" component={Reservation} />
             <Route path="/not-found" component={NotFound} />
-            <Route path="/" exact component={Home} />
+            <Route
+              path="/"
+              exact
+              render={(props) => <Home {...props} loggedIn={this.state} />}
+            />
             <Redirect to="/not-found" />
           </Switch>
         </div>

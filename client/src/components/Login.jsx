@@ -2,13 +2,16 @@ import React, { Component } from "react";
 import axios from "axios";
 
 class LoginForm extends Component {
-  state = {
-    account: {
-      userEmail: "",
-      password: "",
-    },
-    errors: {},
-  };
+  constructor() {
+    super();
+    this.state = {
+      account: {
+        userEmail: "",
+        password: "",
+      },
+      errors: {},
+    };
+  }
 
   validate = () => {
     const errors = {};

@@ -3,14 +3,24 @@ import axios from "axios";
 import User from "./User";
 
 class Home extends Component {
-  state = {
-    users: [],
-  };
+  constructor(props) {
+    super();
+    this.state = {
+      users: [],
+    };
+  }
 
   async componentDidMount() {
     try {
       const users = await axios.get("/api/users");
-      this.setState({ users: users.data });
+      const result = users.data;
+      let usersToDisplay = result;
+      const loggedInUser = this.props.loggedIn;
+
+      if (loggedInUser.user) {
+        usersToDisplay = result.filter((r) => r._id !== loggedInUser.user._id);
+      }
+      this.setState({ users: usersToDisplay });
     } catch (err) {
       this.setState({ error: "Unable to fetch users Currently!!" });
     }
@@ -30,7 +40,3 @@ class Home extends Component {
 }
 
 export default Home;
-/*
-
-{}
-*/

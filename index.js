@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const config = require("config");
 const error = require("./middleware/error");
 const User = require("./routes/users");
+const Appointment = require("./routes/appointment");
 const Auth = require("./routes/auth");
 
 const app = express();
@@ -23,6 +24,7 @@ mongoose
 app.use(express.json());
 app.use("/api/users", User);
 app.use("/api/auth", Auth);
+app.use("/api/appointments", Appointment);
 app.use(error);
 
 app.get("/", (req, res) => {

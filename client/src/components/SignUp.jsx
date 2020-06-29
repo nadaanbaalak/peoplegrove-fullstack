@@ -3,17 +3,20 @@ import moment from "moment-timezone";
 import axios from "axios";
 
 class Signup extends Component {
-  state = {
-    account: {
-      userEmail: "",
-      name: "",
-      password: "",
-      username: "",
-      password2: "",
-      timezone: "Asia/Kolkata",
-    },
-    errors: {},
-  };
+  constructor() {
+    super();
+    this.state = {
+      account: {
+        userEmail: "",
+        name: "",
+        password: "",
+        username: "",
+        password2: "",
+        timezone: "Asia/Kolkata",
+      },
+      errors: {},
+    };
+  }
 
   validate = () => {
     const errors = {};
@@ -129,7 +132,7 @@ class Signup extends Component {
             )}
           </div>
           <div class="form-group">
-            <label for="timezone">Timezone</label>
+            <label htmlFor="timezone">Timezone</label>
             <select
               class="form-control"
               id="timezone"
